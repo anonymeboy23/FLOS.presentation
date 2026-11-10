@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLoS – Be different. Prochainement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* Palette de la charte « version terre » */
+  :root{
+    --noir:#0B0F10; --creme:#F4EFE6; --vert:#1F3D2B; --ciel:#A9CDE0; --brun:#5A3E2B; --corail:#FF5A36;
+    --police:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--police);background:var(--creme);color:var(--noir);line-height:1.5}
+  img{max-width:100%;display:block}
+  section,header,footer{padding:48px 5vw}
+  h1,h2,h3{line-height:1.1}
+  h2{font-size:clamp(1.7rem,5vw,2.6rem);font-weight:900;margin-bottom:10px}
+  .intro{max-width:52ch;opacity:.8;margin-bottom:26px}
+
+  /* Logo : noir sur fond clair, blanc sur fond sombre */
+  .logo{display:inline-flex;align-items:center;gap:10px;font-weight:900;font-size:1.5rem;letter-spacing:.02em;color:inherit;text-decoration:none}
+  .logo svg{width:32px;height:32px;fill:currentColor}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px;background:var(--creme)}
+  header a.lien{color:var(--noir);font-weight:700;text-decoration:none}
+
+  /* Hero */
+  .hero{background:var(--vert);color:var(--creme);padding-bottom:28px}
+  .hero h1{font-size:clamp(3rem,13vw,7rem);font-weight:900;letter-spacing:-.03em}
+  .hero p{max-width:46ch;margin-top:14px;opacity:.9}
+
+  /* Carrousel */
+  .vitrine{background:var(--noir);color:var(--creme);display:flex;flex-direction:column;align-items:center;padding-top:36px}
+  .carrousel{position:relative;width:min(100%,540px);overflow:hidden;border-radius:16px;background:var(--vert)}
+  .piste{display:flex;transition:transform .7s ease}
+  .slide{min-width:100%}
+  .cadre{position:relative;aspect-ratio:4/5;overflow:hidden;background:#222}
+  .cadre .fond{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(24px) brightness(.8);transform:scale(1.2)}
+  .cadre .photo{position:relative;width:100%;height:100%;object-fit:contain}
+  .legende{padding:14px 18px 16px;background:var(--vert);color:var(--creme)}
+  .legende h3{font-size:1.15rem}
+  .legende p{opacity:.8;font-size:.92rem}
+  .fleche{position:absolute;top:38%;transform:translateY(-50%);width:44px;height:44px;border:0;border-radius:50%;
+    background:var(--creme);color:var(--noir);font-size:1.4rem;font-weight:700;cursor:pointer}
+  .gauche{left:10px}.droite{right:10px}
+  .points{display:flex;gap:8px;margin-top:16px}
+  .points button{width:10px;height:10px;border-radius:50%;border:0;background:#ffffff55;cursor:pointer}
+  .points button.actif{background:var(--corail);width:28px;border-radius:6px}
+  .fleche:focus-visible,.points button:focus-visible,.carte-img:focus-visible,a:focus-visible{outline:3px solid var(--corail);outline-offset:3px}
+
+  /* Valeurs */
+  .valeurs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:22px}
+  .valeur{border-radius:16px;padding:24px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between}
+  .valeur h3{font-size:1.5rem;font-weight:900}
+  .v1{background:var(--vert);color:var(--creme)} .v2{background:var(--ciel);color:var(--noir)} .v3{background:var(--corail);color:var(--noir)}
+
+  /* Produits */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+  .carte{background:#fff;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+  .carte-img{border:0;padding:0;background:#e9e4da;cursor:pointer;aspect-ratio:4/5}
+  .carte-img img{width:100%;height:100%;object-fit:cover}
+  .carte div{padding:14px 16px 18px}
+  .carte h3{font-size:1.05rem}
+  .carte p{font-size:.92rem;opacity:.75}
+  .statut{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:8px;background:var(--vert);color:var(--creme);font-size:.82rem;font-weight:700}
+  .astuce{font-size:.82rem;opacity:.6;margin-top:6px}
+  .bonnets{background:#ebe5d8}
+
+  /* Contact */
+  footer{background:var(--noir);color:var(--creme);text-align:center}
+  footer .logo{margin-bottom:12px}
+  footer p{opacity:.8;margin-bottom:16px}
+  .btn{display:inline-block;margin:6px;padding:12px 22px;border-radius:10px;font-weight:700;text-decoration:none;background:var(--creme);color:var(--noir)}
+  .btn.principal{background:var(--corail);color:var(--noir)}
+
+  @media (prefers-reduced-motion:reduce){.piste{transition:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><symbol id="icone" viewBox="-16 -16 32 32">
+    <g id="petale"><path d="M0 -2C-6 -6 -6 -14 -2.6 -14C-1 -14 0 -13 0 -11.6C0 -13 1 -14 2.6 -14C6 -14 6 -6 0 -2Z"/></g>
+    <use href="#petale" transform="rotate(72)"/><use href="#petale" transform="rotate(144)"/>
+    <use href="#petale" transform="rotate(216)"/><use href="#petale" transform="rotate(288)"/>
+  </symbol></defs>
+</svg>
+
+<header>
+  <a class="logo" href="#"><svg><use href="#icone"/></svg>FLoS</a>
+  <a class="lien" href="#contact">Contact</a>
+</header>
+
+<section class="hero">
+  <h1>Be different.</h1>
+  <p>FLoS est pour les précurseurs et les créateurs : des racines profondes, une floraison qui ne ressemble à aucune autre. Découvre nos prochaines pièces.</p>
+</section>
+
+<section class="vitrine" aria-label="Aperçu des prochains produits">
+  <div class="carrousel" id="carrousel">
+    <div class="piste" id="piste"></div>
+    <button class="fleche gauche" id="prec" aria-label="Précédent">‹</button>
+    <button class="fleche droite" id="suiv" aria-label="Suivant">›</button>
+  </div>
+  <div class="points" id="points"></div>
+</section>
+
+<section>
+  <h2>Force, liberté, transformation.</h2>
+  <p class="intro">Faire résonner l’authenticité de la jeunesse. Chacun est une fleur particulière.</p>
+  <div class="valeurs">
+    <div class="valeur v1"><h3>Force</h3><p>S’enraciner et assumer qui on est.</p></div>
+    <div class="valeur v2"><h3>Liberté</h3><p>Respirer, bouger, choisir sa forme.</p></div>
+    <div class="valeur v3"><h3>Transformation</h3><p>Éclore à sa façon, sans se renier.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>T-shirts Sauvage</h2>
+  <p class="intro">Manches longues superposées, motif floral et lettrage gothique. Touche une photo pour voir l’autre face.</p>
+  <div class="grille" id="grille-tees"></div>
+</section>
+
+<section class="bonnets">
+  <h2>Bonnets</h2>
+  <p class="intro">Cinq motifs, une même broderie FLoS.</p>
+  <div class="grille" id="grille-bonnets"></div>
+</section>
+
+<footer id="contact">
+  <a class="logo" href="#"><svg><use href="#icone"/></svg>FLoS</a>
+  <p>Une question ? Une précommande ? Écris-nous.</p>
+  <a class="btn principal" href="https://wa.me/243000000000">WhatsApp</a>
+  <a class="btn" href="mailto:contact@exemple.com">E-mail</a>
+  <a class="btn" href="https://instagram.com/">Instagram</a>
+</footer>
+
+<script>
+  /* ==== MODIFIE ICI ==== */
+  const DELAI = 4000; // temps entre deux images du carrousel (ms)
+
+  // Images du carrousel (photos + produits)
+  const SLIDES = [
+    { img:"images/slide-couple.jpg",     titre:"Collection Sauvage",      texte:"T-shirts superposés, bientôt disponibles" },
+    { img:"images/slide-bonnet-bleu.jpg", titre:"Bonnet tie-dye bleu",   texte:"Broderie FLoS, doublure grise" },
+    { img:"images/slide-bleu.jpg",       titre:"T-shirt bleu délavé",   texte:"Coupe boxy, manches fleuries" },
+    { img:"images/slide-bonnet-sable.jpg", titre:"Bonnet camo sable",    texte:"Lettrage noir sur le côté" },
+    { img:"images/slide-guy.jpg",        titre:"T-shirt Sauvage noir",  texte:"Le gothique rencontre les fleurs" },
+    { img:"images/slide-bonnet-gris.jpg", titre:"Bonnet gris acide",    texte:"Matière brute, effet minéral" }
+  ];
+
+  // Produits : images = liste des vues (touche la photo pour changer)
+  const TEES = [
+    { nom:"T-shirt Sauvage bleu délavé", desc:"Bleu délavé, manches blanches fleuries.", statut:"Bientôt", images:["images/tee-bleu-front.jpg","images/tee-bleu-back.jpg"] },
+    { nom:"T-shirt Sauvage corail",      desc:"Corail délavé, lettrage blanc.",           statut:"Bientôt", images:["images/tee-rose-front.jpg"] },
+    { nom:"T-shirt Sauvage noir",        desc:"Noir, lettrage blanc, icône dans le dos.", statut:"Aperçu du design", images:["images/design-noir.jpg"] },
+    { nom:"T-shirt Sauvage brun terre",  desc:"Brun terre, lettrage noir.",               statut:"Aperçu du design", images:["images/design-brun.jpg"] },
+    { nom:"T-shirt Sauvage bleu marine", desc:"Bleu marine délavé, manches blanches.",    statut:"Aperçu du design", images:["images/design-marine.jpg"] },
+    { nom:"T-shirt Croix",               desc:"Noir, grande croix et fleurs dans le dos.", statut:"Aperçu du design", images:["images/design-croix.jpg"] }
+  ];
+  const BONNETS = [
+    { nom:"Bonnet noir camo",   desc:"Noir sur noir, broderie discrète.", statut:"Bientôt", images:["images/bonnet-noir.jpg"] },
+    { nom:"Bonnet camo sable",  desc:"Camouflage sable et crème.",        statut:"Bientôt", images:["images/bonnet-sable.jpg"] },
+    { nom:"Bonnet camo neige",  desc:"Camouflage blanc et gris.",         statut:"Bientôt", images:["images/bonnet-neige.jpg"] },
+    { nom:"Bonnet gris acide",  desc:"Effet pierre, broderie noire.",     statut:"Bientôt", images:["images/bonnet-gris.jpg"] },
+    { nom:"Bonnet tie-dye bleu",desc:"Bleu et gris, doublure grise.",     statut:"Bientôt", images:["images/bonnet-bleu.jpg"] }
+  ];
+
+  /* ==== CODE ==== */
+  const piste = document.getElementById("piste"), points = document.getElementById("points");
+  const carrousel = document.getElementById("carrousel");
+  let index = 0, minuteur;
+
+  SLIDES.forEach((s, i) => {
+    piste.insertAdjacentHTML("beforeend",
+      `<div class="slide"><div class="cadre"><img class="fond" src="${s.img}" alt=""><img class="photo" src="${s.img}" alt="${s.titre}"></div>
+       <div class="legende"><h3>${s.titre}</h3><p>${s.texte}</p></div></div>`);
+    points.insertAdjacentHTML("beforeend", `<button aria-label="Image ${i+1}" data-i="${i}"></button>`);
+  });
+
+  function aller(i){
+    index = (i + SLIDES.length) % SLIDES.length;
+    piste.style.transform = `translateX(-${index*100}%)`;
+    [...points.children].forEach((b,k) => b.classList.toggle("actif", k === index));
+  }
+  const arreter = () => clearInterval(minuteur);
+  const demarrer = () => { arreter(); minuteur = setInterval(() => aller(index+1), DELAI); };
+
+  document.getElementById("prec").onclick = () => { aller(index-1); demarrer(); };
+  document.getElementById("suiv").onclick = () => { aller(index+1); demarrer(); };
+  points.onclick = e => { if (e.target.dataset.i) { aller(+e.target.dataset.i); demarrer(); } };
+  carrousel.addEventListener("mouseenter", arreter);
+  carrousel.addEventListener("mouseleave", demarrer);
+
+  let x0 = null;
+  carrousel.addEventListener("touchstart", e => { arreter(); x0 = e.touches[0].clientX; }, {passive:true});
+  carrousel.addEventListener("touchend", e => {
+    if (x0 !== null) { const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) aller(index + (dx < 0 ? 1 : -1)); x0 = null; }
+    demarrer();
+  });
+  aller(0);
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) demarrer();
+
+  // Cartes produits
+  function remplir(id, liste){
+    const g = document.getElementById(id);
+    liste.forEach(p => {
+      const multi = p.images.length > 1;
+      g.insertAdjacentHTML("beforeend",
+        `<article class="carte"><button class="carte-img" aria-label="${multi ? "Changer de vue : " : ""}${p.nom}"><img src="${p.images[0]}" alt="${p.nom}"></button>
+         <div><h3>${p.nom}</h3><p>${p.desc}</p><span class="statut">${p.statut}</span>${multi ? '<p class="astuce">Face / dos</p>' : ""}</div></article>`);
+      const bouton = g.lastElementChild.querySelector(".carte-img"), img = bouton.querySelector("img");
+      let v = 0;
+      bouton.onclick = () => { v = (v+1) % p.images.length; img.src = p.images[v]; };
+    });
+  }
+  remplir("grille-tees", TEES);
+  remplir("grille-bonnets", BONNETS);
+</script>
+</body>
+</html>
